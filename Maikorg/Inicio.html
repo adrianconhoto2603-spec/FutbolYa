@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FútbolYA - Organiza tu partido</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo">⚽ FútbolYA</div>
+    <nav>
+      <a href="#">Inicio</a>
+      <a href="#">Mis Partidos</a>
+      <a href="#">Mi Perfil</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>¡Organizá partidos de fútbol en tu escuela!</h1>
+  </section>
+
+  <main>
+    <div class="container">
+      <div class="form-section">
+        <h2>Crear un Nuevo Partido</h2>
+        <form>
+          <label for="fecha">Fecha:</label>
+          <input type="date" id="fecha" name="fecha" required>
+
+          <label for="hora">Hora:</label>
+          <input type="time" id="hora" name="hora" required>
+
+          <label for="lugar">Lugar:</label>
+          <input type="text" id="lugar" name="lugar" placeholder="Ej: Cancha del Colegio" required>
+
+          <label for="jugadores">Jugadores:</label>
+          <select id="jugadores" name="jugadores">
+            <option value="10">5 vs 5</option>
+            <option value="14">7 vs 7</option>
+            <option value="22">11 vs 11</option>
+          </select>
+
+          <button type="submit">Publicar Partido</button>
+        </form>
+      </div>
+
+      <div class="matches-section">
+        <h2>Próximos Partidos</h2>
+        <div class="match-card">
+          <h3>Miércoles 12 May - 17:00</h3>
+          <p>Fútbol 7 en el Polideportivo</p>
+          <p><strong>4 / 14 jugadores</strong></p>
+          <button class="join">¡Unirme!</button>
+        </div>
+
+        <div class="match-card">
+          <h3>Viernes 14 May - 18:30</h3>
+          <p>Partido en Plaza Central</p>
+          <p><strong>8 / 10 jugadores</strong></p>
+          <button class="join">¡Unirme!</button>
+        </div>
+
+        <div class="match-card full">
+          <h3>Sábado 16 May - 11:00</h3>
+          <p>Clásico 11 vs 11 - Cancha Grande</p>
+          <p><strong>20 / 22 jugadores (Completo)</strong></p>
+          <button class="full-btn">Lleno</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <section class="banner">
+    <p>¡Sumate al partido y hacé nuevos amigos en la escuela!</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 FútbolYA - Todos los derechos reservados</p>
+  </footer>
+</body>
+</html>
