@@ -1,5 +1,37 @@
+// script.js
+
+const formRegistro = document.getElementById('formRegistro');
+const formLogin = document.getElementById('formLogin');
+const formPartido = document.getElementById('formPartido');
+const listaPartidos = document.getElementById('listaPartidos');
+
+// Mostrar/ocultar formularios según estado
+document.addEventListener('DOMContentLoaded', () => {
+  const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+  const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+
+  const registroForm = formRegistro.parentElement;
+  const loginForm = formLogin.parentElement;
+
+  if (usuarioActivo) {
+    // Sesión activa → ocultar registro y login
+    registroForm.style.display = 'none';
+    loginForm.style.display = 'none';
+  } else if (usuarios.length === 0) {
+    // No hay usuarios → mostrar registro
+    registroForm.style.display = 'block';
+    loginForm.style.display = 'none';
+  } else {
+    // Ya hay usuarios → mostrar login
+    registroForm.style.display = 'none';
+    loginForm.style.display = 'block';
+  }
+
+  mostrarPartidos();
+});
+
 // Registro
-document.getElementById('formRegistro').addEventListener('submit', (e) => {
+formRegistro.addEventListener('submit', (e) => {
   e.preventDefault();
   const nombre = document.getElementById('nombre').value;
   const email = document.getElementById('email').value;
@@ -15,11 +47,14 @@ document.getElementById('formRegistro').addEventListener('submit', (e) => {
   usuarios.push({ nombre, email, celular, password });
   localStorage.setItem('usuarios', JSON.stringify(usuarios));
   alert('Registro exitoso. Ahora podés iniciar sesión.');
-  e.target.reset();
+
+  formRegistro.reset();
+  formRegistro.parentElement.style.display = 'none';
+  formLogin.parentElement.style.display = 'block';
 });
 
 // Login
-document.getElementById('formLogin').addEventListener('submit', (e) => {
+formLogin.addEventListener('submit', (e) => {
   e.preventDefault();
   const email = document.getElementById('emailLogin').value;
   const password = document.getElementById('passwordLogin').value;
@@ -34,11 +69,13 @@ document.getElementById('formLogin').addEventListener('submit', (e) => {
 
   localStorage.setItem('usuarioActivo', JSON.stringify(usuario));
   alert(`Bienvenido, ${usuario.nombre}`);
-  e.target.reset();
+
+  formLogin.reset();
+  formLogin.parentElement.style.display = 'none';
 });
 
 // Crear partido
-document.getElementById('formPartido').addEventListener('submit', (e) => {
+formPartido.addEventListener('submit', (e) => {
   e.preventDefault();
   const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
   if (!usuarioActivo) {
@@ -66,12 +103,11 @@ document.getElementById('formPartido').addEventListener('submit', (e) => {
   partidos.push(nuevoPartido);
   localStorage.setItem('partidos', JSON.stringify(partidos));
   mostrarPartidos();
-  e.target.reset();
+  formPartido.reset();
 });
 
 // Mostrar partidos
 function mostrarPartidos() {
-  const listaPartidos = document.getElementById('listaPartidos');
   listaPartidos.innerHTML = '';
   const partidos = JSON.parse(localStorage.getItem('partidos')) || [];
 
