@@ -1,66 +1,77 @@
-// script.js
-
-const formUsuario = document.getElementById('formUsuario');
-const formPartido = document.getElementById('formPartido');
-const listaPartidos = document.getElementById('listaPartidos');
-
-// Cargar partidos al iniciar
-document.addEventListener('DOMContentLoaded', mostrarPartidos);
-
-// Manejar login/registro
-formUsuario.addEventListener('submit', (e) => {
+// Registro
+document.getElementById('formRegistro').addEventListener('submit', (e) => {
   e.preventDefault();
-  const usuario = document.getElementById('usuario').value;
-  const password = document.getElementById('password').value;
+  const nombre = document.getElementById('nombre').value;
+  const email = document.getElementById('email').value;
+  const celular = document.getElementById('celular').value;
+  const password = document.getElementById('passwordReg').value;
 
-  if (!usuario || !password) return;
+  let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+  if (usuarios.find(u => u.email === email)) {
+    alert('Este email ya está registrado.');
+    return;
+  }
 
-  // Guardar usuario activo en localStorage
-  localStorage.setItem('usuarioActivo', usuario);
-  alert(`Bienvenido, ${usuario}`);
-  formUsuario.reset();
+  usuarios.push({ nombre, email, celular, password });
+  localStorage.setItem('usuarios', JSON.stringify(usuarios));
+  alert('Registro exitoso. Ahora podés iniciar sesión.');
+  e.target.reset();
 });
 
-// Manejar creación de partido
-formPartido.addEventListener('submit', (e) => {
+// Login
+document.getElementById('formLogin').addEventListener('submit', (e) => {
   e.preventDefault();
+  const email = document.getElementById('emailLogin').value;
+  const password = document.getElementById('passwordLogin').value;
 
-  const usuarioActivo = localStorage.getItem('usuarioActivo');
+  let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+  const usuario = usuarios.find(u => u.email === email && u.password === password);
+
+  if (!usuario) {
+    alert('Email o contraseña incorrectos.');
+    return;
+  }
+
+  localStorage.setItem('usuarioActivo', JSON.stringify(usuario));
+  alert(`Bienvenido, ${usuario.nombre}`);
+  e.target.reset();
+});
+
+// Crear partido
+document.getElementById('formPartido').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
   if (!usuarioActivo) {
     alert('Debes iniciar sesión para crear un partido.');
     return;
   }
 
+  const nombrePartido = document.getElementById('nombrePartido').value;
   const fecha = document.getElementById('fecha').value;
   const hora = document.getElementById('hora').value;
   const lugar = document.getElementById('lugar').value;
   const jugadores = document.getElementById('jugadores').value;
 
-  if (!fecha || !hora || !lugar) return;
-
   const nuevoPartido = {
+    nombrePartido,
     fecha,
     hora,
     lugar,
     jugadores,
-    inscritos: 0,
-    creador: usuarioActivo
+    inscritos: [],
+    creador: usuarioActivo.nombre
   };
 
-  guardarPartido(nuevoPartido);
-  mostrarPartidos();
-  formPartido.reset();
-});
-
-// Guardar partido
-function guardarPartido(partido) {
-  const partidos = JSON.parse(localStorage.getItem('partidos')) || [];
-  partidos.push(partido);
+  let partidos = JSON.parse(localStorage.getItem('partidos')) || [];
+  partidos.push(nuevoPartido);
   localStorage.setItem('partidos', JSON.stringify(partidos));
-}
+  mostrarPartidos();
+  e.target.reset();
+});
 
 // Mostrar partidos
 function mostrarPartidos() {
+  const listaPartidos = document.getElementById('listaPartidos');
   listaPartidos.innerHTML = '';
   const partidos = JSON.parse(localStorage.getItem('partidos')) || [];
 
@@ -73,12 +84,14 @@ function mostrarPartidos() {
     const card = document.createElement('div');
     card.classList.add('match-card');
     card.innerHTML = `
-      <h3>${p.fecha} - ${p.hora}</h3>
+      <h3>${p.nombrePartido}</h3>
+      <p>${p.fecha} - ${p.hora}</p>
       <p>${p.lugar}</p>
-      <p><strong>${p.inscritos} / ${p.jugadores} jugadores</strong></p>
+      <p><strong>${p.inscritos.length} / ${p.jugadores} jugadores</strong></p>
+      <p>Inscritos: ${p.inscritos.join(', ') || 'Nadie aún'}</p>
     `;
 
-    if (p.inscritos >= p.jugadores) {
+    if (p.inscritos.length >= p.jugadores) {
       card.classList.add('full');
       card.innerHTML += `<button class="full-btn">Lleno</button>`;
     } else {
@@ -91,17 +104,23 @@ function mostrarPartidos() {
 
 // Unirse a partido
 function unirme(index) {
-  const usuarioActivo = localStorage.getItem('usuarioActivo');
+  const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
   if (!usuarioActivo) {
     alert('Debes iniciar sesión para unirte a un partido.');
     return;
   }
 
-  const partidos = JSON.parse(localStorage.getItem('partidos')) || [];
-  if (partidos[index].inscritos < partidos[index].jugadores) {
-    partidos[index].inscritos++;
-    localStorage.setItem('partidos', JSON.stringify(partidos));
-    mostrarPartidos();
+  let partidos = JSON.parse(localStorage.getItem('partidos')) || [];
+  const partido = partidos[index];
+
+  if (partido.inscritos.length < partido.jugadores) {
+    if (!partido.inscritos.includes(usuarioActivo.nombre)) {
+      partido.inscritos.push(usuarioActivo.nombre);
+      localStorage.setItem('partidos', JSON.stringify(partidos));
+      mostrarPartidos();
+    } else {
+      alert('Ya estás inscrito en este partido.');
+    }
   } else {
     alert('Este partido ya está completo.');
   }
