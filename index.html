@@ -35,8 +35,12 @@
       const password = document.getElementById('passwordReg').value;
 
       let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-      if (usuarios.find(u => u.email === email)) {
-        alert('Este email ya está registrado.');
+      const usuarioExistente = usuarios.find(u => u.email === email);
+
+      if (usuarioExistente) {
+        // Si el email ya existe → redirigir a login
+        alert('Este email ya está registrado. Iniciá sesión.');
+        window.location.href = "login.html";
         return;
       }
 
