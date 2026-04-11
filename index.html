@@ -3,24 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Registro - FútbolYA</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="registro.css">
 </head>
 <body>
-  <section class="hero">
-    <h1>Registrate en FútbolYA</h1>
-  </section>
-
   <main>
     <div class="form-section">
+      <h2>Registro</h2>
       <form id="formRegistro">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" required>
-        <label for="email">Email:</label>
-        <input type="email" id="email" required>
-        <label for="celular">Celular:</label>
-        <input type="text" id="celular" required>
-        <label for="passwordReg">Contraseña:</label>
-        <input type="password" id="passwordReg" required>
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="text" id="celular" placeholder="Celular" required>
+        <input type="password" id="passwordReg" placeholder="Contraseña" required>
         <button type="submit">Registrarse</button>
       </form>
     </div>
@@ -38,7 +31,6 @@
       const usuarioExistente = usuarios.find(u => u.email === email);
 
       if (usuarioExistente) {
-        // Si el email ya existe → redirigir a login
         alert('Este email ya está registrado. Iniciá sesión.');
         window.location.href = "login.html";
         return;
