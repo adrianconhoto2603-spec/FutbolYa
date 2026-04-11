@@ -2,105 +2,52 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FútbolYA - Organiza tu partido</title>
+  <title>Registro - FútbolYA</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="logo">⚽ FútbolYA</div>
-    <nav>
-      <a href="#">Inicio</a>
-      <a href="#">Mis Partidos</a>
-      <a href="#">Mi Perfil</a>
-    </nav>
-  </header>
-
   <section class="hero">
-    <h1>¡Organizá partidos de fútbol en tu escuela!</h1>
+    <h1>Registrate en FútbolYA</h1>
   </section>
 
   <main>
-    <div class="container" id="router">
-      <!-- Aquí se decide qué mostrar -->
-    </div>
-
-    <div class="container" id="app" style="display:none;">
-      <!-- Crear partido -->
-      <div class="form-section">
-        <h2>Crear un Nuevo Partido</h2>
-        <form id="formPartido">
-          <label for="nombrePartido">Nombre del Partido:</label>
-          <input type="text" id="nombrePartido" required>
-
-          <label for="fecha">Fecha:</label>
-          <input type="date" id="fecha" required>
-
-          <label for="hora">Hora:</label>
-          <input type="time" id="hora" required>
-
-          <label for="lugar">Lugar:</label>
-          <select id="lugar" required>
-            <option value="Club Comunicaciones">Club Comunicaciones - Av. S. Martín 5125</option>
-            <option value="Santo Tomé Fútbol Club">Santo Tomé Fútbol Club - Santo Tomé 3165</option>
-            <option value="Complejo San Remo">Complejo San Remo - Nogoyá 5014</option>
-          </select>
-
-          <label for="jugadores">Jugadores:</label>
-          <select id="jugadores">
-            <option value="10">5 vs 5</option>
-            <option value="14">7 vs 7</option>
-            <option value="22">11 vs 11</option>
-          </select>
-
-          <button type="submit">Publicar Partido</button>
-        </form>
-      </div>
-
-      <!-- Lista de partidos -->
-      <div class="matches-section">
-        <h2>Próximos Partidos</h2>
-        <div id="listaPartidos"></div>
-      </div>
+    <div class="form-section">
+      <form id="formRegistro">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+        <label for="celular">Celular:</label>
+        <input type="text" id="celular" required>
+        <label for="passwordReg">Contraseña:</label>
+        <input type="password" id="passwordReg" required>
+        <button type="submit">Registrarse</button>
+      </form>
     </div>
   </main>
 
-  <section class="banner">
-    <p>¡Sumate al partido y hacé nuevos amigos en la escuela!</p>
-  </section>
-
-  <footer>
-    <p>&copy; 2026 FútbolYA - Todos los derechos reservados</p>
-  </footer>
-
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-      const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
-      const router = document.getElementById("router");
-      const app = document.getElementById("app");
+    document.getElementById('formRegistro').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nombre = document.getElementById('nombre').value;
+      const email = document.getElementById('email').value;
+      const celular = document.getElementById('celular').value;
+      const password = document.getElementById('passwordReg').value;
 
-      if (!usuarios.length) {
-        // No hay usuarios → mostrar botón de registro
-        router.innerHTML = `
-          <h2>Bienvenido a FútbolYA</h2>
-          <p>Para empezar, registrate:</p>
-          <a href="registro.html"><button>Registrarse</button></a>
-        `;
-      } else if (!usuarioActivo) {
-        // Hay usuarios pero no sesión → mostrar botón de login
-        router.innerHTML = `
-          <h2>Bienvenido de nuevo</h2>
-          <p>Iniciá sesión para continuar:</p>
-          <a href="login.html"><button>Iniciar Sesión</button></a>
-        `;
-      } else {
-        // Sesión activa → mostrar la app
-        router.style.display = "none";
-        app.style.display = "block";
+      let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+      if (usuarios.find(u => u.email === email)) {
+        alert('Este email ya está registrado.');
+        return;
       }
+
+      usuarios.push({ nombre, email, celular, password });
+      localStorage.setItem('usuarios', JSON.stringify(usuarios));
+      alert('Registro exitoso. Ahora podés iniciar sesión.');
+      window.location.href = "login.html";
     });
   </script>
+</body>
+</html>
   <script src="script.js"></script>
 </body>
 </html>
