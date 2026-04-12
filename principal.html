@@ -2,45 +2,83 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>FútbolYa</title>
-  <link rel="stylesheet" href="principal.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FútbolYA - Organiza tu partido</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>FútbolYa</h1>
+    <div class="logo">⚽ FútbolYA</div>
     <nav>
-      <!-- Aquí podrías tener enlaces a otras secciones como Registro/Login -->
-      <a href="index.html">Inicio</a>
-      <a href="registro.html">Registro</a>
-      <a href="login.html">Login</a>
+      <a href="#">Inicio</a>
+      <a href="#">Mis Partidos</a>
+      <a href="#">Mi Perfil</a>
     </nav>
   </header>
 
-  <main>
-    <section>
-      <h2>Publicar un Partido</h2>
-      <!-- Formulario para crear partido -->
-      <form id="formPartido">
-        <input type="text" id="nombrePartido" placeholder="Nombre del partido" required>
-        <input type="date" id="fecha" required>
-        <input type="time" id="hora" required>
-        <input type="text" id="lugar" placeholder="Lugar" required>
-        <input type="number" id="jugadores" placeholder="Cantidad de jugadores" required>
-        <button type="submit">Publicar partido</button>
-      </form>
-    </section>
+  <section class="hero">
+    <h1>¡Organizá partidos de fútbol en tu escuela!</h1>
+  </section>
 
-    <section>
-      <h2>Próximos Partidos</h2>
-      <!-- Contenedor donde se renderizan los partidos -->
-      <div id="listaPartidos"></div>
-    </section>
+  <main>
+    <div class="container">
+      <!-- Crear partido -->
+      <div class="form-section">
+        <h2>Crear un Nuevo Partido</h2>
+        <form id="formPartido">
+          <label for="nombrePartido">Nombre del Partido:</label>
+          <input type="text" id="nombrePartido" required>
+
+          <label for="fecha">Fecha:</label>
+          <input type="date" id="fecha" required>
+
+          <label for="hora">Hora:</label>
+          <input type="time" id="hora" required>
+
+          <label for="lugar">Lugar:</label>
+          <select id="lugar" required>
+            <option value="Club Comunicaciones">Club Comunicaciones - Av. S. Martín 5125</option>
+            <option value="Santo Tomé Fútbol Club">Santo Tomé Fútbol Club - Santo Tomé 3165</option>
+            <option value="Complejo San Remo">Complejo San Remo - Nogoyá 5014</option>
+          </select>
+
+          <label for="jugadores">Jugadores:</label>
+          <select id="jugadores">
+            <option value="10">5 vs 5</option>
+            <option value="14">7 vs 7</option>
+            <option value="22">11 vs 11</option>
+          </select>
+
+          <button type="submit">Publicar Partido</button>
+        </form>
+      </div>
+
+      <!-- Lista de partidos -->
+      <div class="matches-section">
+        <h2>Próximos Partidos</h2>
+        <div id="listaPartidos"></div>
+      </div>
+    </div>
   </main>
 
+  <section class="banner">
+    <p>¡Sumate al partido y hacé nuevos amigos en la escuela!</p>
+  </section>
+
   <footer>
-    <p>© 2026 FútbolYa - Plataforma de integración estudiantil</p>
+    <p>&copy; 2026 FútbolYA - Todos los derechos reservados</p>
   </footer>
 
+  <script>
+    // Bloqueo si no hay sesión activa
+    document.addEventListener("DOMContentLoaded", () => {
+      const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
+      if (!usuarioActivo) {
+        alert("Debes iniciar sesión primero.");
+        window.location.href = "login.html";
+      }
+    });
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
