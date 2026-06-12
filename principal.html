@@ -6,23 +6,32 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Publicar Partido</h1>
+  <header>
+    <h1>App de Fútbol Escolar</h1>
+  </header>
 
-  <!-- Formulario para crear partidos -->
-  <form id="formPartido">
-    <input type="text" id="nombrePartido" placeholder="Nombre del partido" required>
-    <input type="date" id="fecha" required>
-    <input type="time" id="hora" required>
-    <input type="text" id="lugar" placeholder="Lugar" required>
-    <input type="number" id="jugadores" placeholder="Cantidad de jugadores" required>
-    <button type="submit">Publicar</button>
-  </form>
+  <main>
+    <section class="form-section">
+      <h2>Publicar nuevo partido</h2>
+      <form id="formPartido">
+        <input type="text" id="nombrePartido" placeholder="Nombre del partido" required>
+        <input type="date" id="fecha" required>
+        <input type="time" id="hora" required>
+        <input type="text" id="lugar" placeholder="Lugar" required>
+        <input type="number" id="jugadores" placeholder="Cantidad de jugadores" required>
+        <button type="submit">Publicar</button>
+      </form>
+    </section>
 
-  <!-- Sección donde se mostrarán los partidos -->
-  <h2>Partidos publicados</h2>
-  <section id="listaPartidos">
-    <!-- Aquí se insertan las tarjetas dinámicamente -->
-  </section>
+    <section class="lista-section">
+      <h2>Partidos publicados</h2>
+      <div id="listaPartidos"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 App de Fútbol Escolar</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
