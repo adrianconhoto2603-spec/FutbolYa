@@ -1,14 +1,14 @@
-// URL de tu recurso en MockAPI (ya confirmado)
-const API_URL = "https://69dad9b4560857310a072633.mockapi.io/partidos";
+// URL del recurso en MockAPI (asegurate que sea exactamente este)
+const API_URL = "https://69dad9b4560857310a072633.mockapi.io/partido";
 
 document.addEventListener("DOMContentLoaded", () => {
   const formPartido = document.getElementById("formPartido");
   const listaPartidos = document.getElementById("listaPartidos");
 
-  // 🔹 Cargar partidos al iniciar
+  // Cargar partidos al iniciar
   cargarPartidos();
 
-  // 🔹 Publicar partido nuevo
+  // Publicar partido nuevo
   formPartido.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
       hora: document.getElementById("hora").value,
       lugar: document.getElementById("lugar").value,
       jugadores: document.getElementById("jugadores").value,
-      inscriptos: [] // lista vacía al inicio
+      inscriptos: []
     };
 
     fetch(API_URL, {
@@ -27,27 +27,24 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify(nuevoPartido)
     })
     .then(res => res.json())
-    .then(data => {
-      console.log("Partido creado:", data);
-      cargarPartidos(); // recargar lista
-    })
+    .then(() => cargarPartidos())
     .catch(err => console.error("Error al publicar partido:", err));
 
     formPartido.reset();
   });
 
-  // 🔹 Función para cargar partidos
+  // Función para cargar partidos
   function cargarPartidos() {
     fetch(API_URL)
       .then(res => res.json())
       .then(data => {
-        console.log("Partidos cargados:", data); // 👀 depuración
+        console.log("Partidos cargados:", data);
         renderPartidos(data);
       })
       .catch(err => console.error("Error al cargar partidos:", err));
   }
 
-  // 🔹 Renderizar partidos en pantalla
+  // Renderizar partidos en pantalla
   function renderPartidos(partidos) {
     listaPartidos.innerHTML = "";
     if (partidos.length === 0) {
@@ -70,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
       listaPartidos.appendChild(card);
     });
 
-    // 🔹 Botones de inscripción
+    // Botones de inscripción
     document.querySelectorAll(".inscribirse").forEach(btn => {
       btn.addEventListener("click", (e) => {
         const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
@@ -82,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const partidoId = e.target.dataset.id;
 
-        // Buscar partido en la API y actualizar inscriptos
         fetch(`${API_URL}/${partidoId}`)
           .then(res => res.json())
           .then(partido => {
@@ -92,7 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
               return;
             }
 
-            // Validar cupo
             if (partido.inscriptos.length >= parseInt(partido.jugadores)) {
               alert("El cupo de jugadores ya está completo.");
               return;
