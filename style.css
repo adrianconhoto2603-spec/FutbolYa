@@ -1,67 +1,38 @@
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: #f0f4f0;
-  margin: 0;
-  padding: 0;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>App de Fútbol Escolar</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>App de Fútbol Escolar</h1>
+  </header>
 
-header, footer {
-  background-color: #2e7d32;
-  color: white;
-  text-align: center;
-  padding: 15px;
-}
+  <main>
+    <section class="form-section">
+      <h2>Publicar nuevo partido</h2>
+      <form id="formPartido">
+        <input type="text" id="nombrePartido" placeholder="Nombre del partido" required>
+        <input type="date" id="fecha" required>
+        <input type="time" id="hora" required>
+        <input type="text" id="lugar" placeholder="Lugar" required>
+        <input type="number" id="jugadores" placeholder="Cantidad de jugadores" required>
+        <button type="submit">Publicar</button>
+      </form>
+    </section>
 
-main {
-  padding: 20px;
-  max-width: 900px;
-  margin: auto;
-}
+    <section class="lista-section">
+      <h2>Partidos publicados</h2>
+      <div id="listaPartidos"></div>
+    </section>
+  </main>
 
-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
+  <footer>
+    <p>© 2026 App de Fútbol Escolar</p>
+  </footer>
 
-form input, form button {
-  flex: 1 1 200px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-form button {
-  background: #2e7d32;
-  color: white;
-  cursor: pointer;
-}
-
-#listaPartidos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.partido-card {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: transform 0.2s;
-}
-
-.partido-card:hover {
-  transform: scale(1.02);
-}
-
-.partido-card h3 {
-  margin-top: 0;
-  color: #1565c0;
-}
+  <script src="script.js"></script>
+</body>
+</html>
