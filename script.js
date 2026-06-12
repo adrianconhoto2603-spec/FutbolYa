@@ -7,15 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🔹 Cargar partidos al iniciar
   cargarPartidos();
-function cargarPartidos() {
-  fetch(API_URL)
-    .then(res => res.json())
-    .then(data => {
-      console.log("Partidos cargados:", data); // 👀 ver qué trae
-      renderPartidos(data);
-    })
-    .catch(err => console.error("Error al cargar partidos:", err));
-}
 
   // 🔹 Publicar partido nuevo
   formPartido.addEventListener("submit", (e) => {
@@ -45,7 +36,10 @@ function cargarPartidos() {
   function cargarPartidos() {
     fetch(API_URL)
       .then(res => res.json())
-      .then(data => renderPartidos(data))
+      .then(data => {
+        console.log("Partidos cargados:", data); // 👀 depuración
+        renderPartidos(data);
+      })
       .catch(err => console.error("Error al cargar partidos:", err));
   }
 
@@ -66,6 +60,7 @@ function cargarPartidos() {
         <p><strong>Hora:</strong> ${p.hora}</p>
         <p><strong>Lugar:</strong> ${p.lugar}</p>
         <p><strong>Jugadores:</strong> ${p.jugadores}</p>
+        <p><strong>Inscriptos:</strong> ${p.inscriptos ? p.inscriptos.length : 0}</p>
         <button class="inscribirse" data-id="${p.id}">Inscribirse</button>
       `;
       listaPartidos.appendChild(card);
@@ -93,6 +88,12 @@ function cargarPartidos() {
               return;
             }
 
+            // Validar cupo
+            if (partido.inscriptos.length >= parseInt(partido.jugadores)) {
+              alert("El cupo de jugadores ya está completo.");
+              return;
+            }
+
             partido.inscriptos.push(usuarioActivo.email);
 
             return fetch(`${API_URL}/${partidoId}`, {
@@ -107,3 +108,4 @@ function cargarPartidos() {
     });
   }
 });
+
