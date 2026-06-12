@@ -62,28 +62,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// ⚠️ Bloque para generar 200 partidos automáticamente en MockAPI
-// Ejecutar solo una vez, luego borrar para que no se repita
-const lugares = [
-  "Cancha Municipal", "Colegio San Martín", "Club Atlético Alvear",
-  "Polideportivo Escolar", "Estadio Barrial", "Complejo Deportivo Norte"
-];
-
-for (let i = 1; i <= 200; i++) {
-  const partido = {
-    nombre: `Partido Escolar ${i}`,
-    fecha: `2026-06-${(i % 30) + 1}`,
-    hora: `${(i % 24).toString().padStart(2, '0')}:00`,
-    lugar: lugares[i % lugares.length],
-    jugadores: Math.floor(Math.random() * 10) + 5,
-    inscriptos: []
-  };
-
-  fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(partido)
-  });
-}
-
 
