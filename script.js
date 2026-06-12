@@ -7,6 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🔹 Cargar partidos al iniciar
   cargarPartidos();
+function cargarPartidos() {
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(data => {
+      console.log("Partidos cargados:", data); // 👀 ver qué trae
+      renderPartidos(data);
+    })
+    .catch(err => console.error("Error al cargar partidos:", err));
+}
 
   // 🔹 Publicar partido nuevo
   formPartido.addEventListener("submit", (e) => {
