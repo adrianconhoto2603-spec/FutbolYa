@@ -1,5 +1,6 @@
 const API_URL = "https://69dad9b4560857310a072633.mockapi.io/partido";
 
+
 document.addEventListener("DOMContentLoaded", () => {
   const formPartido = document.getElementById("formPartido");
   const listaPartidos = document.getElementById("listaPartidos");
