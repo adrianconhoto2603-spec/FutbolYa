@@ -1,4 +1,4 @@
-// URL de tu recurso en MockAPI
+// URL de tu recurso en MockAPI (ya confirmado)
 const API_URL = "https://69dad9b4560857310a072633.mockapi.io/partidos";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -26,7 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(nuevoPartido)
     })
-    .then(() => cargarPartidos()) // recargar lista
+    .then(res => res.json())
+    .then(data => {
+      console.log("Partido creado:", data);
+      cargarPartidos(); // recargar lista
+    })
     .catch(err => console.error("Error al publicar partido:", err));
 
     formPartido.reset();
@@ -108,4 +112,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
