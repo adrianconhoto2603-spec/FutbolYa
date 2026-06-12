@@ -1,14 +1,11 @@
-// URL del recurso en MockAPI (asegurate que sea exactamente este)
 const API_URL = "https://69dad9b4560857310a072633.mockapi.io/partido";
 
 document.addEventListener("DOMContentLoaded", () => {
   const formPartido = document.getElementById("formPartido");
   const listaPartidos = document.getElementById("listaPartidos");
 
-  // Cargar partidos al iniciar
   cargarPartidos();
 
-  // Publicar partido nuevo
   formPartido.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -33,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
     formPartido.reset();
   });
 
-  // Función para cargar partidos
   function cargarPartidos() {
     fetch(API_URL)
       .then(res => res.json())
@@ -44,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(err => console.error("Error al cargar partidos:", err));
   }
 
-  // Renderizar partidos en pantalla
   function renderPartidos(partidos) {
     listaPartidos.innerHTML = "";
     if (partidos.length === 0) {
@@ -67,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
       listaPartidos.appendChild(card);
     });
 
-    // Botones de inscripción
     document.querySelectorAll(".inscribirse").forEach(btn => {
       btn.addEventListener("click", (e) => {
         const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
