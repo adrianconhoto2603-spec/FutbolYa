@@ -1,31 +1,28 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  color: #333;
+  background: #f4f4f4;
   margin: 20px;
 }
 
-h1 {
-  text-align: center;
-  color: #006400;
+h1, h2 {
+  color: #2e7d32;
 }
 
 form {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  justify-content: center;
   margin-bottom: 20px;
 }
 
 form input, form button {
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
 form button {
-  background: #006400;
+  background: #2e7d32;
   color: white;
   cursor: pointer;
 }
@@ -41,4 +38,19 @@ form button {
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.partido-card h3 {
+  margin-top: 0;
+  color: #1565c0;
+}
+
+.partido-card button {
+  margin-top: 10px;
+  padding: 8px;
+  background: #1565c0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
