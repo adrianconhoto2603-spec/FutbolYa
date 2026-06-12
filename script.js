@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(nuevoPartido)
     })
-    .then(res => res.json())
     .then(() => cargarPartidos())
     .catch(err => console.error("Error al publicar partido:", err));
 
@@ -57,47 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Lugar:</strong> ${p.lugar}</p>
         <p><strong>Jugadores:</strong> ${p.jugadores}</p>
         <p><strong>Inscriptos:</strong> ${p.inscriptos ? p.inscriptos.length : 0}</p>
-        <button class="inscribirse" data-id="${p.id}">Inscribirse</button>
       `;
       listaPartidos.appendChild(card);
     });
-
-    document.querySelectorAll(".inscribirse").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
-        if (!usuarioActivo) {
-          alert("Debes iniciar sesión para inscribirte.");
-          window.location.href = "login.html";
-          return;
-        }
-
-        const partidoId = e.target.dataset.id;
-
-        fetch(`${API_URL}/${partidoId}`)
-          .then(res => res.json())
-          .then(partido => {
-            if (!partido.inscriptos) partido.inscriptos = [];
-            if (partido.inscriptos.includes(usuarioActivo.email)) {
-              alert("Ya estás inscripto en este partido.");
-              return;
-            }
-
-            if (partido.inscriptos.length >= parseInt(partido.jugadores)) {
-              alert("El cupo de jugadores ya está completo.");
-              return;
-            }
-
-            partido.inscriptos.push(usuarioActivo.email);
-
-            return fetch(`${API_URL}/${partidoId}`, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(partido)
-            });
-          })
-          .then(() => cargarPartidos())
-          .catch(err => console.error("Error al inscribirse:", err));
-      });
-    });
   }
 });
+
